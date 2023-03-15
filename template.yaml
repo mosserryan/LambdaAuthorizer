@@ -13,6 +13,10 @@ Globals:
     Architectures:
       - x86_64
     MemorySize: 512
+    Environment:
+      Variables:
+        PHOTO_APP_USERS_POOL_ID: us-west-2_9KaPB3BsU
+        PHOTO_APP_USERS_APP_CLIENT_ID: 26rpp6mem61nq18ejd135krktq
 
 Resources:
   MyApi:
@@ -29,6 +33,13 @@ Resources:
     Properties:
       CodeUri: LambdaAuthorizer
       Handler: com.appsdeveloperblog.aws.lambda.GetUserByUsernameHandler::handleRequest
+      Policies:
+      - Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'cognito-idp:AdminGetUser'
+            Resource: "arn:aws:cognito-idp:us-west-2:796162985282:userpool/us-west-2_9KaPB3BsU"
       Events:
         GetUserByUsername:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
